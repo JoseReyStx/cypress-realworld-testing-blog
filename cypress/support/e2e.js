@@ -15,7 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
-import "./Answers/commands";
+// import "./Answers/commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

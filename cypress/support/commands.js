@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +24,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getAllPosts', () => {
+    cy.request('GET', 'http://localhost:3000/api/posts').then((response) => {
+        return cy.wrap(response);
+    });
+});
+
+Cypress.Commands.add('getFirstPost', () => {
+    cy.request('GET', 'http://localhost:3000/api/posts').then((response) => {
+        // return cy.wrap(response);
+        return cy.wrap(response.body).its(0);
+    });
+})
