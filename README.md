@@ -5,26 +5,24 @@ A Next.js Blog for the Real World Testing with Cypress Curriculum.
 ## Installation
 
 ```bash
-yarn install
+npm install
 ```
 
 Start the local dev server.
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 While the dev server is running, in a separate terminal window, run the following command to launch Cypress.
 
 ```bash
-yarn cypress:open
+npx cypress open
 ```
 
-## Pratice Tests & Answers
+## Pratice Tests
 
-The practice tests are located in `cypress/integration/Practice`
-
-The answers are located in `cypress/integration/Answers`
+The practice tests are located in `cypress/e2e/Practice`
 
 ---
 
