@@ -26,13 +26,13 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('getAllPosts', () => {
-    cy.request('GET', 'http://localhost:3000/api/posts').then((response) => {
+    cy.request('GET', '/api/posts').then((response) => {
         return cy.wrap(response);
     });
 });
 
 Cypress.Commands.add('getFirstPost', () => {
-    cy.request('GET', 'http://localhost:3000/api/posts').then((response) => {
+    cy.request('GET', '/api/posts').then((response) => {
         // return cy.wrap(response);
         return cy.wrap(response.body).its(0);
     });

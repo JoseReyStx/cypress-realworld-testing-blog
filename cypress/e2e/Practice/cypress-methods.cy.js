@@ -4,7 +4,7 @@ describe("Important Cypress Methods", () => {
     // Then use cy.invoke() to 'slice' the response body by 1.
     // Hint: you will need to use cy.wrap() around the response.body before calling .invoke()
     // https://docs.cypress.io/api/commands/wrap
-    cy.request('GET', 'http://localhost:3000/api/posts').then((res) => {
+    cy.request('GET', '/api/posts').then((res) => {
       console.log(res);
       cy.wrap(res).its('body').invoke('slice', 0, 1);
     });
@@ -17,15 +17,15 @@ describe("Important Cypress Methods", () => {
     // Hint: you will need to use cy.wrap() around the response.body before calling .invoke()
     // You will also need to use .its() twice.
     // https://docs.cypress.io/api/commands/wrap
-    cy.request('GET', 'http://localhost:3000/api/posts').then((res) => {
+    cy.request('GET', '/api/posts').then((res) => {
       cy.wrap(res.body).its(0).its('id').should('eq', 'pre-rendering');
     });
   });
 
-  it.only("uses cy.within() to get the <h1> inside of the <header>", () => {
+  it("uses cy.within() to get the <h1> inside of the <header>", () => {
     // Use cy.within() to get the <h1> nested inside of the <header> element
     // Then assert that the <h1> contains the correct text.
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
     cy.get('header.layout_header__2rhWq').within(() => {
       cy.get('h1').should('have.text', 'Real World Testing Blog');
     });

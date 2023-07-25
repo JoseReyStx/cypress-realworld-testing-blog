@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 describe("Custom Cypress Commands", () => {
   it("uses cy.getAllPosts()to retrieve all posts from the /api/posts endpoint", () => {
     // Create a custom Cypress Command called 'getAllPosts' which uses
@@ -5,8 +6,10 @@ describe("Custom Cypress Commands", () => {
     // Then use this custom command in this test to assert that the length of the posts
     // returned is equal to 2
     cy.getAllPosts().then((response) => {
-      cy.wrap(response).as('posts').its('body').its('length').should("eq", 2);
-      cy.get('@posts').its('status').should('eq', 200);
+      // cy.wrap(response).as('posts').its('body').its('length').should("eq", 2);
+      // cy.get('@posts').its('status').should('eq', 200);
+      expect(response.body).to.have.lengthOf(2);
+      expect(response.status).to.eq(200);
     });
   });
 

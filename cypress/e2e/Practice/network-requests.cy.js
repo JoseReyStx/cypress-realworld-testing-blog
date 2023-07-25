@@ -7,7 +7,7 @@
 */
 describe("Network Requests", () => {
   beforeEach(() => {
-    cy.intercept("GET", "http://localhost:3000/api/posts", (req) => {
+    cy.intercept("GET", "/api/posts", (req) => {
       // this is to disable browser caching
       // https://glebbahmutov.com/blog/cypress-intercept-problems/
       delete req.headers["if-none-match"];
@@ -21,7 +21,7 @@ describe("Network Requests", () => {
     // returns a status code of 200
     // Hint: You will need to use cy.request()
     // https://docs.cypress.io/api/commands/request
-    cy.request('GET', 'http://localhost:3000/api/posts').then((res) => {
+    cy.request('GET', '/api/posts').then((res) => {
       cy.wrap(res).its('status').should('eq', 200);
     });
   });
@@ -46,7 +46,7 @@ describe("Network Requests", () => {
     cy.fixture('posts.json').should('have.length', 25);
   });
 
-  it.only("intercepts /api/posts and returns the correct number of posts", () => {
+  it("intercepts /api/posts and returns the correct number of posts", () => {
     // Wait upon the @posts intercept that happens in the beforeEach()
     // and assert that the response contains the correct number of posts
     // Hint: you will need to cy.wait() to wait upon the @posts alias.

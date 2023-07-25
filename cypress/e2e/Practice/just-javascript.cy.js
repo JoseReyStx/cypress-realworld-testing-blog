@@ -11,14 +11,17 @@ describe("Cypress is just JavaScript", () => {
     // a sortedPosts function which will sort the posts inside of response.body for you.
     // https://lodash.com/docs/4.17.15#forEach
 
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
 
-    cy.request("GET", "http://localhost:3000/api/posts").then((response) => {
+    cy.request("GET", "/api/posts").then((response) => {
       const sortedPosts = (posts) => {
         return posts.sort(
           (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
         );
       };
+      _.each(sortedPosts(response.body), (post, i) => {
+        cy.get(`[data-test="post-link-${i}"]`).contains(post.title);
+      });
     });
   });
 
@@ -33,14 +36,18 @@ describe("Cypress is just JavaScript", () => {
     // from the API into the correct format. If you get stuck, the formatting string,
     // can be found inside of /components/date.js
 
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
 
-    cy.request("GET", "http://localhost:3000/api/posts").then((response) => {
+    cy.request("GET", "/api/posts").then((response) => {
       const sortedPosts = (posts) => {
         return posts.sort(
           (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
         );
       };
+      _.each(sortedPosts(response.body), (post, i) => {
+        const newDate = format(parseISO(post.date), "MMMM d, yyyy");
+        cy.get(`[data-test="post-date-${i}"]`).contains(newDate);
+      });
     });
   });
 });
