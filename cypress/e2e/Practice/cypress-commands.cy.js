@@ -6,10 +6,11 @@ describe("Custom Cypress Commands", () => {
     // Then use this custom command in this test to assert that the length of the posts
     // returned is equal to 2
     cy.getAllPosts().then((response) => {
+      const { body, status } = response;
       // cy.wrap(response).as('posts').its('body').its('length').should("eq", 2);
       // cy.get('@posts').its('status').should('eq', 200);
-      expect(response.body).to.have.lengthOf(2);
-      expect(response.status).to.eq(200);
+      expect(body).to.have.lengthOf(2);
+      expect(status).to.eq(200);
     });
   });
 

@@ -4,9 +4,9 @@ describe("Important Cypress Methods", () => {
     // Then use cy.invoke() to 'slice' the response body by 1.
     // Hint: you will need to use cy.wrap() around the response.body before calling .invoke()
     // https://docs.cypress.io/api/commands/wrap
-    cy.request('GET', '/api/posts').then((res) => {
-      console.log(res);
-      cy.wrap(res).its('body').invoke('slice', 0, 1);
+    cy.request('GET', '/api/posts').then((response) => {
+      console.log(response);
+      cy.wrap(response).its('body').invoke('slice', 0, 1);
     });
   });
 
@@ -17,8 +17,8 @@ describe("Important Cypress Methods", () => {
     // Hint: you will need to use cy.wrap() around the response.body before calling .invoke()
     // You will also need to use .its() twice.
     // https://docs.cypress.io/api/commands/wrap
-    cy.request('GET', '/api/posts').then((res) => {
-      cy.wrap(res.body).its(0).its('id').should('eq', 'pre-rendering');
+    cy.request('GET', '/api/posts').then((response) => {
+      cy.wrap(response.body).its(0).its('id').should('eq', 'pre-rendering');
     });
   });
 

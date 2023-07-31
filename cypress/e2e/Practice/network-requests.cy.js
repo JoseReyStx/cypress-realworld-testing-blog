@@ -7,13 +7,13 @@
 */
 describe("Network Requests", () => {
   beforeEach(() => {
-    cy.intercept("GET", "/api/posts", (req) => {
+    cy.intercept("GET", "/api/posts", (request) => {
       // this is to disable browser caching
       // https://glebbahmutov.com/blog/cypress-intercept-problems/
-      delete req.headers["if-none-match"];
+      delete request.headers["if-none-match"];
     }).as("posts");
 
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
   });
 
   it("/api/posts returns a status code of 200", () => {
@@ -21,16 +21,16 @@ describe("Network Requests", () => {
     // returns a status code of 200
     // Hint: You will need to use cy.request()
     // https://docs.cypress.io/api/commands/request
-    cy.request('GET', '/api/posts').then((res) => {
-      cy.wrap(res).its('status').should('eq', 200);
+    cy.request('GET', '/api/posts').then((response) => {
+      cy.wrap(response).its('status').should('eq', 200);
     });
   });
 
   it("/api/posts returns the correct number of posts", () => {
     // Write an assertion that the route '/api/posts'
     // returns the correct number of posts.
-    cy.getAllPosts().then((res) => {
-      cy.wrap(res.body).its('length').should('eq', 2);
+    cy.getAllPosts().then((response) => {
+      cy.wrap(response.body).its('length').should('eq', 2);
     });
   });
 
@@ -52,9 +52,10 @@ describe("Network Requests", () => {
     // Hint: you will need to cy.wait() to wait upon the @posts alias.
     // https://docs.cypress.io/api/commands/wait
     // cy.wait('@posts').its('response.body').should('have.length', 2);
-    cy.wait('@posts').its('response').should((res) => {
-      expect(res.body).to.have.length(2);
-      expect(res.statusCode).to.eq(200);
+    cy.wait('@posts').its('response').should((response) => {
+      const { body, statusCode } = response;
+      expect(body).to.have.length(2);
+      expect(statusCode).to.eq(200);
     });
   });
 });

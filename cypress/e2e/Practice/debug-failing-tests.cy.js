@@ -3,7 +3,7 @@
   to find out why.
 */
 describe("Debug Failing Tests", () => {
-  beforeEach(() => {
+  beforeEach("Visit main page", () => {
     cy.visit("/");
   });
 

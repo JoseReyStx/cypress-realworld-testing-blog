@@ -1,7 +1,11 @@
 const { _ } = Cypress;
-import { format, parseISO } from "date-fns";
+import { getFormatedDate, sortedPosts } from '../helpers/helper';
 
 describe("Cypress is just JavaScript", () => {
+  beforeEach("Visit main page", () => {
+    cy.visit("/");
+  });
+
   it("uses _.each() from lodash to make sure the titles from the posts api are displayed correctly on the home page", () => {
     // Use _.each() from lodash to iterate over the posts inside of response.body
     // while also getting the post titles on the homepage to make sure that the
@@ -11,14 +15,7 @@ describe("Cypress is just JavaScript", () => {
     // a sortedPosts function which will sort the posts inside of response.body for you.
     // https://lodash.com/docs/4.17.15#forEach
 
-    cy.visit("/");
-
     cy.request("GET", "/api/posts").then((response) => {
-      const sortedPosts = (posts) => {
-        return posts.sort(
-          (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-        );
-      };
       _.each(sortedPosts(response.body), (post, i) => {
         cy.get(`[data-test="post-link-${i}"]`).contains(post.title);
       });
@@ -36,16 +33,12 @@ describe("Cypress is just JavaScript", () => {
     // from the API into the correct format. If you get stuck, the formatting string,
     // can be found inside of /components/date.js
 
-    cy.visit("/");
-
     cy.request("GET", "/api/posts").then((response) => {
-      const sortedPosts = (posts) => {
-        return posts.sort(
-          (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-        );
-      };
-      _.each(sortedPosts(response.body), (post, i) => {
-        const newDate = format(parseISO(post.date), "MMMM d, yyyy");
+      const { body } = response;
+
+      _.each(sortedPosts(body), (post, i) => {
+        const { date } = post;
+        const newDate = getFormatedDate(date, "MMMM d, yyyy");
         cy.get(`[data-test="post-date-${i}"]`).contains(newDate);
       });
     });
